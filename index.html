@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sona ❤️ Nickuu</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:cursive}
+body{background:linear-gradient(135deg,#f8cdda,#fceef5);overflow:hidden}
+
+.screen{
+  width:100%;height:100vh;display:none;
+  flex-direction:column;justify-content:center;align-items:center;
+  text-align:center;padding:20px;position:relative;
+}
+.screen.active{display:flex}
+
+h1,h2,p{color:#7a2c82;margin:12px 0;font-weight:500}
+
+.btn{
+  padding:12px 26px;background:#c77dff;border:none;border-radius:30px;
+  color:white;font-size:18px;margin:8px;cursor:pointer;
+}
+
+input{
+  padding:12px;border:none;border-radius:25px;
+  width:240px;text-align:center;font-size:16px;
+}
+
+.arrow{
+  position:absolute;bottom:20px;right:20px;
+  font-size:32px;color:#7a2c82;cursor:pointer;
+}
+
+/* tic tac toe */
+.board{display:grid;grid-template-columns:repeat(3,90px);gap:10px;margin-top:15px}
+.cell{
+  width:90px;height:90px;background:white;border-radius:15px;
+  display:flex;justify-content:center;align-items:center;font-size:36px;
+}
+
+/* heart pulse */
+.heart{font-size:60px;animation:pulse 1.2s infinite}
+@keyframes pulse{
+  0%{transform:scale(1)}
+  50%{transform:scale(1.2)}
+  100%{transform:scale(1)}
+}
+
+/* final */
+.final{position:relative;overflow:hidden}
+.letter{
+  background:white;padding:25px;border-radius:20px;max-width:500px;
+  position:relative;z-index:2;box-shadow:0 10px 30px rgba(0,0,0,.2);
+}
+
+/* heart rain */
+.rain{position:absolute;inset:0;pointer-events:none;z-index:1}
+.rain span{position:absolute;animation:fall linear infinite}
+@keyframes fall{
+  0%{transform:translateY(-10vh);opacity:0}
+  10%{opacity:1}
+  100%{transform:translateY(110vh);opacity:0}
+}
+</style>
+</head>
+
+<body>
+
+<!-- PASSWORD -->
+<div class="screen active">
+  <h1>🔐 Secret Page</h1>
+  <p>Only Sona can unlock this 💖</p>
+  <input id="pwd" type="password" placeholder="Enter password">
+  <button class="btn" onclick="unlock()">Unlock 💕</button>
+  <p id="err"></p>
+</div>
+
+<!-- SLIDES -->
+<div class="screen"><h2>I have a tiny question for you… 🥺</h2><div class="heart">💗</div><div class="arrow" onclick="next()">➜</div></div>
+<div class="screen"><h2>This is a line ➖</h2><div class="arrow" onclick="next()">➜</div></div>
+<div class="screen"><h2>This is a wine 🍷</h2><div class="arrow" onclick="next()">➜</div></div>
+<div class="screen"><h2>This is a nine 9️⃣</h2><div class="arrow" onclick="next()">➜</div></div>
+
+<div class="screen">
+  <h2>Will you be mine, Sona? 💕</h2>
+  <div class="heart">🥹</div>
+  <button class="btn" onclick="runAway(this)">No 🙈</button>
+  <button class="btn" onclick="next()">Yes 💖</button>
+</div>
+
+<div class="screen"><h2>Let’s settle it with a game… 🎮</h2><div class="arrow" onclick="next()">➜</div></div>
+
+<div class="screen">
+  <h2>Tic Tac Toe 💜</h2>
+  <div class="board">
+    <div class="cell" onclick="play(0)"></div>
+    <div class="cell" onclick="play(1)"></div>
+    <div class="cell" onclick="play(2)"></div>
+    <div class="cell" onclick="play(3)"></div>
+    <div class="cell" onclick="play(4)"></div>
+    <div class="cell" onclick="play(5)"></div>
+    <div class="cell" onclick="play(6)"></div>
+    <div class="cell" onclick="play(7)"></div>
+    <div class="cell" onclick="play(8)"></div>
+  </div>
+  <p>Your turn 💕</p>
+</div>
+
+<div class="screen">
+  <h1>Looks like you are my Valentine 💖</h1>
+  <div class="heart">💞</div>
+  <div class="arrow" onclick="next()">➜</div>
+</div>
+
+<div class="screen">
+  <h2>Us in every universe ✨💑</h2>
+  <div class="heart">🌌💖</div>
+  <div class="arrow" onclick="next()">➜</div>
+</div>
+
+<!-- FINAL -->
+<div class="screen final">
+  <div class="rain" id="rain"></div>
+
+  <div class="letter">
+    <h2>My Dearest Sona 💕</h2>
+
+    <p>
+      Happy Valentine’s Day to my lady 💃,<br>
+      my girlfriend 💕,<br>
+      my babu 🧸,<br>
+      my baby 🥰,<br>
+      my jaan ❤️,<br>
+      my queen 👑,<br>
+      my world 🌍,<br>
+      and my everything ✨
+    </p>
+
+    <p>
+      You are not just someone I love —  
+      you are someone I choose,  
+      in every moment,  
+      in every lifetime,  
+      today, tomorrow, and always ♾️💖
+    </p>
+
+    <h3>Forever yours,<br>Nickuu ❤️</h3>
+    <div class="heart">💘</div>
+  </div>
+</div>
+
+<script>
+let screens=document.querySelectorAll(".screen");
+let cells=document.querySelectorAll(".cell");
+let current=0,moves=0;
+
+function unlock(){
+  if(document.getElementById("pwd").value==="Happyvalentinedaybabu"){
+    screens[0].classList.remove("active");
+    current=1;
+    screens[1].classList.add("active");
+  }else{
+    document.getElementById("err").innerText="Wrong password 😜";
+  }
+}
+
+function next(){
+  if(current<screens.length-1){
+    screens[current].classList.remove("active");
+    current++;
+    screens[current].classList.add("active");
+    if(screens[current].classList.contains("final")) heartRain();
+  }
+}
+
+function runAway(btn){
+  btn.style.position="absolute";
+  btn.style.left=Math.random()*80+"%";
+  btn.style.top=Math.random()*80+"%";
+}
+
+function play(i){
+  if(cells[i].innerHTML!=="") return;
+  cells[i].innerHTML="💜";
+  moves++;
+  const ai=[1,4,7];
+  setTimeout(()=>{
+    if(ai[moves-1]!=null) cells[ai[moves-1]].innerHTML="❌";
+    if(moves===3) setTimeout(next,700);
+  },300);
+}
+
+function heartRain(){
+  let box=document.getElementById("rain");
+  for(let i=0;i<30;i++){
+    let s=document.createElement("span");
+    s.innerHTML=["💗","💖","💕","💞"][Math.floor(Math.random()*4)];
+    s.style.left=Math.random()*100+"%";
+    s.style.fontSize=(14+Math.random()*16)+"px";
+    s.style.animationDuration=(6+Math.random()*6)+"s";
+    box.appendChild(s);
+    setTimeout(()=>s.remove(),12000);
+  }
+}
+</script>
+
+</body>
+</html>
